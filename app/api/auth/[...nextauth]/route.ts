@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const authOptions: any = {
+const authOptions: any = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -112,5 +112,4 @@ export const authOptions: any = {
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };
