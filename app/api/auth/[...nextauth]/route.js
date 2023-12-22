@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { AuthOptions } from "next-auth";
 import bcrypt from "bcrypt";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -7,7 +8,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const authOptions: any = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -17,18 +18,15 @@ export const authOptions: any = {
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
-      credentials: {
-        Login: { label: "Username", type: "text", placeholder: "jsmith" },
-        Password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials: any) {
+      credentials: {},
+      async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
 
         // if (!credentials.password || !credentials.username) {
         //   return null;
         // }
 
-        const user: any = await prisma.tAdmin.findFirst({
+        const user = await prisma.tAdmin.findFirst({
           where: {
             Login: credentials.Login,
             Password: credentials.Password,
