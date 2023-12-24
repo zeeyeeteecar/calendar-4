@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
 
+
 const mainMenuData = [
-  { title: "Login", link: "/login", query: { name: "test" } },
+  { title: "Sign In", link: "/signin", query: { name: "test" } },
+  { title: "Sign Out", link: "/signout", query: { name: "test" } },
   { title: "Member", link: "/members", query: { name: "test" } },
   { title: "Calendar", link: "/calendar", query: { name: "test" } },
 ];

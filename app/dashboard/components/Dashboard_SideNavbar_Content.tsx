@@ -1,7 +1,9 @@
 "use client";
+
 import React from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const megaData = [
   {
@@ -43,9 +45,15 @@ const megaData = [
 
 export default function Dashboard_SideNavbar_Content() {
   const { data: session, status } = useSession();
-
   const nextAuthSession: any = session;
 
+  const router = useRouter();
+
+  function userSignOut() {
+    signOut({ redirect: false }).then(() => {
+      router.push("/signin"); // Redirect to the dashboard page after signing out
+    });
+  }
   return (
     <div className="flex-col w-[200px] bg-gray-200 h-screen">
       <div className="w-full bg-white shadow-xl rounded-lg flex overflow-x-auto custom-scrollbar">
@@ -91,7 +99,7 @@ export default function Dashboard_SideNavbar_Content() {
                 );
               })}
 
-              <li>
+              <li onClick={() => userSignOut()}>
                 <Link
                   href="#"
                   className="bg-gray-500 bg-opacity-30 text-blue-500 flex items-center justify-between py-1.5 px-4 rounded cursor-pointer"
@@ -110,7 +118,7 @@ export default function Dashboard_SideNavbar_Content() {
                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                     ></path>
                   </svg>
-                  <span>Trash</span>
+                  <span>Sign Out</span>
                 </Link>
               </li>
             </ul>

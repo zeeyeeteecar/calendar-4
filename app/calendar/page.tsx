@@ -59,8 +59,8 @@ export default async function page() {
 
   return (
     <>
-      <div>
-        useMousePosition:==
+      <div className="flex flex-row">
+        <label>useMousePosition:==</label>
         <UseMousePosition />
       </div>
       <div>

@@ -23,9 +23,15 @@ import Header from "./components/Dashboard_Header";
 import LeftColumn from "./components/Dashboard_LeftColumn";
 import RightColumn from "./components/Dashboard_RightColumn";
 
+import LoginSessionInfo from "./components/LoginSessionInfo";
+
 export default function Home() {
   return (
     <div className="flex">
+      <div>
+        {/* <LoginSessionInfo /> */}
+      </div>
+      {/* <LoginSessionInfo /> */}
       <SideNavbar />
       <div className="flex-1 md:flex h-screen relative">
         <Header />
