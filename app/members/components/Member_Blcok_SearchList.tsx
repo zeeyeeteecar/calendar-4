@@ -1,6 +1,9 @@
 import { PiTrashThin } from "react-icons/pi";
 import { CiEdit } from "react-icons/ci";
 import { CiPhone } from "react-icons/ci";
+import { MdGirl } from "react-icons/md";
+import { MdBoy } from "react-icons/md";
+import { FaQuestion } from "react-icons/fa6";
 import { PiCellSignalFullLight } from "react-icons/pi";
 
 import moment from "moment";
@@ -57,13 +60,43 @@ export default async function Member_Blcok_SearchList({
           <div className="px-6 py-4 font-medium text-gray-900 w-[300px]">
             Company
           </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+          <div className="px-6 py-4 font-medium text-gray-900 w-[100px]">
+            Gender
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[150px]">
             DoB
           </div>
           <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
             Phone / Cell
           </div>
-          <div className="px-6 py-4 font-medium text-gray-900">Gender</div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Board
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Part
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Aff
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Vol
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Vote
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            L-Vote
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            CSG
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Staff
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
+            Donor
+          </div>
+
           <div className="px-6 py-4 font-medium text-gray-900">Team</div>
           <div className="px-6 py-4 font-medium text-gray-900">Team</div>
         </div>
@@ -100,11 +133,15 @@ export default async function Member_Blcok_SearchList({
                       {member.Company}
                     </div>
 
-                    <div className="px-6 py-4 w-[200px] border-0">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+                    <div className="px-6 py-7 w-[100px] border-0  ">
+                      <Gender gender={member.Gender} />
+                    </div>
+
+                    <div className="px-6 py-4 w-[150px] border-0">
+                      {/* <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
                         Active
-                      </span>
+                      </span> */}
                       <span>
                         {member.DoB
                           ? moment.utc(member.DoB).format("YYYY-MM-DD")
@@ -154,6 +191,30 @@ export default async function Member_Blcok_SearchList({
             })}
         </div>
       </div>
+    </div>
+  );
+}
+
+function Gender({ gender }: any) {
+  if (gender === "M") {
+    return (
+      <>
+        <MdBoy size={30} color="DeepSkyBlue" />
+      </>
+    );
+  }
+
+  if (gender === "F") {
+    return (
+      <>
+        <MdGirl size={30} color="HotPink" />
+      </>
+    );
+  }
+
+  return (
+    <div className="ml-2">
+      <FaQuestion size={15} color="gray" />
     </div>
   );
 }
