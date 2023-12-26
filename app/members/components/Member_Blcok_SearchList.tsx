@@ -5,6 +5,9 @@ import { MdGirl } from "react-icons/md";
 import { MdBoy } from "react-icons/md";
 import { FaQuestion } from "react-icons/fa6";
 import { PiCellSignalFullLight } from "react-icons/pi";
+import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
+import { CiFaceSmile } from "react-icons/ci";
 
 import moment from "moment";
 
@@ -18,6 +21,18 @@ import { prisma } from "../../lib/db";
 //   Address: string;
 //   PhoneHome: string;
 // };
+
+const dataStatus = [
+  { title: "Board", clr: "red", fieldTitle: "Board" },
+  { title: "Part", clr: "blue", fieldTitle: "Participant" },
+  { title: "Affi", clr: "purple", fieldTitle: "Affiliate" },
+  { title: "Vol", clr: "gray", fieldTitle: "Volunteer" },
+  { title: "Vote", clr: "pink", fieldTitle: "VotingMbr" },
+  { title: "L-Vote", clr: "hotpink", fieldTitle: "VotingMbr_Life" },
+  { title: "CSG", clr: "green", fieldTitle: "CSG" },
+  { title: "Staff", clr: "orange", fieldTitle: "Staff" },
+  { title: "Donor", clr: "red", fieldTitle: "Status_Donor" },
+];
 
 export default async function Member_Blcok_SearchList({
   globe_MemberSearchKeywords,
@@ -69,33 +84,20 @@ export default async function Member_Blcok_SearchList({
           <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
             Phone / Cell
           </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Board
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Part
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Aff
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Vol
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Vote
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            L-Vote
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            CSG
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Staff
-          </div>
-          <div className="px-6 py-4 font-medium text-gray-900  w-[200px]">
-            Donor
-          </div>
+
+          {dataStatus.map((status: any, key: number) => {
+            return (
+              <>
+                <div
+                  key={key}
+                  className="px-0 py-4 font-medium text-gray-900  w-[50px] text-center justify-center border-0"
+                  style={{ color: status.clr }}
+                >
+                  {status.title}
+                </div>
+              </>
+            );
+          })}
 
           <div className="px-6 py-4 font-medium text-gray-900">Team</div>
           <div className="px-6 py-4 font-medium text-gray-900">Team</div>
@@ -105,7 +107,10 @@ export default async function Member_Blcok_SearchList({
             members.map((member: any, key: number) => {
               return (
                 <>
-                  <div key={key} className="hover:bg-gray-50 flex flex-row">
+                  <div
+                    key={key}
+                    className=" group hover:bg-gray-50 flex flex-row h-[75px]"
+                  >
                     <div className="flex flex-row gap-3 px-6 py-4 font-normal text-gray-900 border-0 w-[300px]">
                       <div className="relative h-10 w-10">
                         <img
@@ -134,10 +139,10 @@ export default async function Member_Blcok_SearchList({
                     </div>
 
                     <div className="px-6 py-7 w-[100px] border-0  ">
-                      <Gender gender={member.Gender} />
+                      <Gender gender={member["Gender"]} />
                     </div>
 
-                    <div className="px-6 py-4 w-[150px] border-0">
+                    <div className="px-6 py-6 w-[150px] border-0">
                       {/* <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-600"></span>
                         Active
@@ -149,7 +154,7 @@ export default async function Member_Blcok_SearchList({
                       </span>
                     </div>
 
-                    <div className="px-1 py-4 flex flex-col w-[200px]">
+                    <div className="  px-1 py-4 flex flex-col w-[200px]">
                       <div className="flex flex-row">
                         <span className=" text-slate-400 py-1 w-[20px] border-0">
                           <CiPhone />
@@ -164,7 +169,21 @@ export default async function Member_Blcok_SearchList({
                       </div>
                     </div>
 
-                    <div className="px-6 py-4">
+                    {dataStatus.map((status: any, key: number) => {
+                      return (
+                        <>
+                          <div className="px-0 py-7 w-[50px] border-0  justify-center text-center flex   ">
+                            {member[status.fieldTitle] ? (
+                              <CiFaceSmile color={status.clr} size="20" />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </>
+                      );
+                    })}
+
+                    {/* <div className="px-6 py-4">
                       <div className="flex gap-2">
                         <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
                           Design
@@ -176,13 +195,13 @@ export default async function Member_Blcok_SearchList({
                           Develop
                         </span>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="px-6 py-4">
-                      <div className="flex justify-end gap-4">
-                        <CiEdit size={25} />
+                    <div className="px-7 py-5 border-0">
+                      <div className="flex justify-end gap-4 border-0 text-gray-100 group-hover:text-gray-400">
+                        <CiEdit size={30} />
 
-                        <PiTrashThin size={25} />
+                        <PiTrashThin size={30} />
                       </div>
                     </div>
                   </div>
