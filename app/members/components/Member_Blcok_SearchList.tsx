@@ -13,6 +13,7 @@ import moment from "moment";
 
 import React from "react";
 import { prisma } from "../../lib/db";
+import Modal_Member_Edit from "./Member_Edit";
 
 // type Props = {
 //   tMasterID: string;
@@ -198,10 +199,12 @@ export default async function Member_Blcok_SearchList({
                     </div> */}
 
                     <div className="px-7 py-5 border-0">
-                      <div className="flex justify-end gap-4 border-0 text-gray-100 group-hover:text-gray-400">
-                        <CiEdit size={30} />
+                      <div className="flex  justify-end gap-4 border-0 text-gray-100 group-hover:text-gray-400 ">
 
-                        <PiTrashThin size={30} />
+
+                        <span className="border-0 hover:cursor-pointer hover:text-red-500 ">
+                          <PiTrashThin size={30} />
+                        </span>
                       </div>
                     </div>
                   </div>
