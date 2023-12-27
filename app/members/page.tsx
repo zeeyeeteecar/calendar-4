@@ -1,8 +1,9 @@
 import React from "react";
 import { revalidatePath } from "next/cache";
 
-import Member_Blcok_SearchList from "./components/Member_Blcok_SearchList";
+import Members_Blcok_SearchList from "./components/Members_Blcok_SearchList";
 import Members_Block_SearchBar from "./components/Members_Block_SearchBar";
+import Member_AddNew from "./components/Member_AddNew";
 
 //let globe_Search_Members_Results: any;
 let globe_MemberSearchKeywords: {
@@ -62,12 +63,16 @@ export default function page() {
 
   return (
     <>
-      <Members_Block_SearchBar
-        //globe_Search_Members_Results={globe_Search_Members_Results}
-        handle_Search_Members={handle_Search_Members}
-        handle_Search_Members_Debounce={handle_Search_Members_Debounce}
-      />
-      <Member_Blcok_SearchList
+      <div className="flex flex-row p-3 space-x-3">
+        <Member_AddNew />
+        <Members_Block_SearchBar
+          //globe_Search_Members_Results={globe_Search_Members_Results}
+          handle_Search_Members={handle_Search_Members}
+          handle_Search_Members_Debounce={handle_Search_Members_Debounce}
+        />
+      </div>
+
+      <Members_Blcok_SearchList
         globe_MemberSearchKeywords={globe_MemberSearchKeywords}
       />
     </>
