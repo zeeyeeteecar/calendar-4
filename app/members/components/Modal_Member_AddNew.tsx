@@ -4,8 +4,48 @@ import { IoPersonAddOutline } from "react-icons/io5";
 
 import { dataStatus } from "../../lib/data";
 
-export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
+export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
+
   const [showModal, setShowModal] = React.useState(false);
+
+  const [member_AddInfo, setMember_AddInfo]=React.useState(
+    {        
+      Company: "",
+      DoB: "",
+      Gender: "",
+      Lname:"",
+      Fname:"",
+      Family:"",
+      Title: "",
+      Address: "",
+      Address2: "",
+      City: "",
+      Prov: "",
+      PhoneHome: "",
+      Cell: "",
+      Email: "",
+      Email2: "",
+      RenewalDate: "",
+      Disability:"",
+      DateofReg: "",
+      VotingMbr: "",
+      VotingMbr_Life: "",
+      Participant: "",
+      Affiliate: "",
+      Volunteer: "",
+      Board: "",
+      Staff: "",
+      CSG:"",
+      Status_Donor: "",
+      Notes: "",
+    }
+  )
+
+  function handle_Member_AddNew_Local(event) {
+    event.preventDefault();
+    console.log(event);
+    //handle_Member_AddNew(event);
+  }
 
   return (
     <>
@@ -26,7 +66,7 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none border-0">
             <form
               className="space-y-6"
-              onSubmit={handle_addNewMember}
+              onSubmit={handle_Member_AddNew_Local}
               method="POST"
             >
               <div className="relative my-6 mx-auto w-[1300px] h-[800px] ">
@@ -334,8 +374,7 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
                     </button>
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
+                      type="submit"
                     >
                       Save Changes
                     </button>
@@ -357,9 +396,9 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
 const StatusList = () => {
   return (
     <div className="flex flex-col p-3 space-y-1">
-        <div className="flex flex-row hover:bg-white p-3 m-3 border-b-[1px] border-blue-400 text-blue-700">
-            Member Status
-        </div>
+      <div className="flex flex-row hover:bg-white p-3 m-3 border-b-[1px] border-blue-400 text-blue-700">
+        Member Status
+      </div>
       {dataStatus.map((status: any, key: number) => {
         return (
           <div key={key} className="flex flex-row hover:bg-white p-2">
