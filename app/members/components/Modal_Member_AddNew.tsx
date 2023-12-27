@@ -31,13 +31,13 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
             >
               <div className="relative my-6 mx-auto w-[1300px] h-[800px] ">
                 {/*content*/}
-                <div className="border-0  rounded-lg shadow-lg relative flex flex-col w-full h-full bg-slate-100 outline-none focus:outline-none">
+                <div className="border-0  rounded-lg shadow-lg relative flex flex-col w-full h-full bg-slate-50 outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                     <h3 className="text-2xl font-semibold">Add New Member</h3>
 
                     <button
-                      className="w-[70px]  border-emerald-700 border-[1px] hover:bg-emerald-100 active:bg-emerald-600 font-bold uppercase text-sm px-2 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className="w-[70px]  border-emerald-700 border-[0px] hover:bg-emerald-100 active:bg-emerald-600 font-bold uppercase text-sm px-2 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       onClick={() => setShowModal(false)}
                     >
                       <span className="bg-transparent text-black opacity-50 h-6 w-6 text-l block outline-none focus:outline-none">
@@ -278,6 +278,21 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
 
                       <div className="flex flex-row border-0 space-x-3">
                         <span className="border-0 w-[130px] flex item-center justify-end text-left my-auto text-slate-500">
+                          Notes:
+                        </span>
+                        <span className="border-0 w-[250px] flex  justify-left text-left">
+                          <textarea
+                            required
+                            id="Event_Details"
+                            onChange={null}
+                            className="w-full h-[130px] rounded-md border border-[#ffffff] bg-white py-1 px-4 text-base font-medium text-[#6B7280] outline-none placeholder-gray-300  focus:border-[#6A64F1] "
+                            placeholder="Write your thoughts ... ..."
+                          ></textarea>
+                        </span>
+                      </div>
+
+                      <div className="flex flex-row border-0 space-x-3">
+                        <span className="border-0 w-[130px] flex item-center justify-end text-left my-auto text-slate-500">
                           Reg Date:
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
@@ -342,6 +357,9 @@ export default function Modal_Member_AddNew({ handle_addNewMember }: any) {
 const StatusList = () => {
   return (
     <div className="flex flex-col p-3 space-y-1">
+        <div className="flex flex-row hover:bg-white p-3 m-3 border-b-[1px] border-blue-400 text-blue-700">
+            Member Status
+        </div>
       {dataStatus.map((status: any, key: number) => {
         return (
           <div key={key} className="flex flex-row hover:bg-white p-2">
