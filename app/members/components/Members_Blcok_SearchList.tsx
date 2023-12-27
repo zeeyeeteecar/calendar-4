@@ -16,7 +16,7 @@ import { prisma } from "../../lib/db";
 
 import Modal_Member_Edit from "./Modal_Member_Edit";
 
-import {dataStatus} from "../../lib/data"
+import { dataStatus } from "../../lib/data";
 
 // type Props = {
 //   tMasterID: string;
@@ -25,8 +25,6 @@ import {dataStatus} from "../../lib/data"
 //   Address: string;
 //   PhoneHome: string;
 // };
-
-
 
 export default async function Member_Blcok_SearchList({
   globe_MemberSearchKeywords,
@@ -55,15 +53,19 @@ export default async function Member_Blcok_SearchList({
     });
   }
 
+  const countResult = members ? members.length : 0;
+
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
       {/* <div>{JSON.stringify(members)}</div> */}
 
-      <div>{members ? members.length : 0}</div>
-
       <div className="w-full border-collapse bg-white text-left text-sm text-gray-500">
         <div className="bg-gray-50 border-0 flex flex-row">
-          <div className="px-6 py-4 font-medium text-gray-900 w-[300px]">
+          <div className="px-4 py-4 font-medium text-gray-900 w-[100px] border-0">
+            <span className=" text-slate-300">Total:</span>
+            <span className=" text-blue-600 text-lg"> {countResult}</span>
+          </div>
+          <div className="px-6 py-4 font-medium text-gray-900 w-[200px]  border-0">
             Name
           </div>
           <div className="px-6 py-4 font-medium text-gray-900 w-[300px]">
@@ -192,7 +194,6 @@ export default async function Member_Blcok_SearchList({
                     </div> */}
 
                     <div className="px-7 py-5 border-0 flex flex-row">
-
                       <Modal_Member_Edit />
                       <div className="flex justify-end gap-4 border-0 text-gray-100 group-hover:text-gray-400 hover:cursor-pointer hover:text-red-400 mx-2">
                         <PiTrashThin size={30} />
