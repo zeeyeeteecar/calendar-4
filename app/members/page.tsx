@@ -1,7 +1,7 @@
 import React from "react";
 import { revalidatePath } from "next/cache";
 
-import Member_Blcok_SearchList from "./components/Member_Blcok_SearchList";
+import Members_Blcok_SearchList from "./components/Members_Blcok_SearchList";
 import Members_Block_SearchBar from "./components/Members_Block_SearchBar";
 
 //let globe_Search_Members_Results: any;
@@ -67,7 +67,7 @@ export default function page() {
         handle_Search_Members={handle_Search_Members}
         handle_Search_Members_Debounce={handle_Search_Members_Debounce}
       />
-      <Member_Blcok_SearchList
+      <Members_Blcok_SearchList
         globe_MemberSearchKeywords={globe_MemberSearchKeywords}
       />
     </>

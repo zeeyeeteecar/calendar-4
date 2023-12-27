@@ -1,8 +1,10 @@
 "use client";
 import React, { useRef } from "react";
+import { IoPersonAddOutline } from "react-icons/io5";
 
 import { DebounceInput } from "react-debounce-input";
 //import { revalidatePath, revalidateTag } from "next/cache";
+import Modal_Member_AddNew from "./Modal_Member_AddNew";
 
 export default function Members_Block_SearchBar({
   handle_Search_Members,
@@ -233,6 +235,8 @@ export default function Members_Block_SearchBar({
 
             <span>Search</span>
           </button>
+
+          <Modal_Member_AddNew />
         </form>
       </div>
     </div>
