@@ -4,52 +4,53 @@ import { revalidatePath } from "next/cache";
 
 import Modal_Member_AddNew from "./Modal_Member_AddNew";
 
-export default function Member_AddNew() {
-  async function handle_Member_AddNew(Member_AddInfo: any) {
-    "use server";
+async function handle_addNewMember(member_AddNew_Data: any) {
+  "use server";
+  console.log("server successful", member_AddNew_Data);
 
-    console.log(Member_AddInfo);
+  await prisma.tMaster.create({
+    data: {
+      Fname: member_AddNew_Data.Fname,
+      Lname: member_AddNew_Data.Lname,
+      DoB: member_AddNew_Data.DoB,
+      Gender: member_AddNew_Data.Gender,
+      PhoneHome: member_AddNew_Data.PhoneHome,
+      Cell: member_AddNew_Data.Cell,
+      Email: member_AddNew_Data.Email,
+      Email2: member_AddNew_Data.Email2,
+      Company: member_AddNew_Data.Company,
+      Family: member_AddNew_Data.Family,
+      Disability: member_AddNew_Data.Disability,
+      Address: member_AddNew_Data.Address,
+      Address2: member_AddNew_Data.Address2,
+      City: member_AddNew_Data.City,
+      Prov: member_AddNew_Data.Prov,
+      PostalCode: member_AddNew_Data.PostalCode,
+      Title: member_AddNew_Data.Title,
+      Notes: member_AddNew_Data.Notes,
+      DateofReg: member_AddNew_Data.DateofReg,
+      RenewalDate: member_AddNew_Data.RenewalDate,
 
-    await prisma.tMaster.create({
-      data: {
-        Company: Member_AddInfo.Company,
-        DoB: Member_AddInfo.DoB,
-        Gender: Member_AddInfo.Gender,
-        Lname: Member_AddInfo.Lname,
-        Fname: Member_AddInfo.Fname,
-        Family: Member_AddInfo.Family,
-        Title: Member_AddInfo.Title,
-        Address: Member_AddInfo.Address,
-        Address2: Member_AddInfo.Address2,
-        City: Member_AddInfo.City,
-        Prov: Member_AddInfo.Prov,
-        PhoneHome: Member_AddInfo.PhoneHome,
-        Cell: Member_AddInfo.Cell,
-        Email: Member_AddInfo.Email,
-        Email2: Member_AddInfo.Email2,
-        RenewalDate: Member_AddInfo.RenewalDate,
-        Disability: Member_AddInfo.Disability,
-        DateofReg: Member_AddInfo.DateofReg,
-        VotingMbr: Member_AddInfo.VotingMbr,
-        VotingMbr_Life: Member_AddInfo.VotingMbr_Life,
-        Participant: Member_AddInfo.Participant,
-        Affiliate: Member_AddInfo.Affiliate,
-        Volunteer: Member_AddInfo.Volunteer,
-        Board: Member_AddInfo.Board,
-        Staff: Member_AddInfo.Staff,
-        CSG: Member_AddInfo.CSG,
-        Status_Donor: Member_AddInfo.Status_Donor,
-        Notes: Member_AddInfo.Notes,
-      },
-    });
+      Board: member_AddNew_Data.Board,
+      Participant: member_AddNew_Data.Participant,
+      Affiliate: member_AddNew_Data.Affiliate,
+      Volunteer: member_AddNew_Data.Volunteer,
+      VotingMbr: member_AddNew_Data.VotingMbr,
+      VotingMbr_Life: member_AddNew_Data.VotingMbr_Life,
+      CSG: member_AddNew_Data.CSG,
+      Staff: member_AddNew_Data.Staff,
+      Status_Donor: member_AddNew_Data.Status_Donor,
+    },
+  });
 
-    //console.log("Free pizza!");
-    revalidatePath("/");
-  }
+  //console.log("Free pizza!");
+  revalidatePath("/");
+}
 
+export default async function Member_AddNew() {
   return (
-    <div>
-      <Modal_Member_AddNew handle_Member_AddNew={handle_Member_AddNew} />
-    </div>
+    <>
+      <Modal_Member_AddNew handle_addNewMember={handle_addNewMember} />
+    </>
   );
 }

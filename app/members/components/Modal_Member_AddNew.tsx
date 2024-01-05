@@ -2,49 +2,64 @@
 import React from "react";
 import { IoPersonAddOutline } from "react-icons/io5";
 
-import { dataStatus } from "../../lib/data";
+import { data_Status } from "../../lib/data";
+import { close } from "fs";
 
-export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
+const initialState = {
+  Fname: "",
+  Lname: "",
+  DoB: "",
+  Gender: "",
+  PhoneHome: "",
+  Cell: "",
+  Email: "",
+  Email2: "",
+  Company: "",
+  Family: "",
+  Disability: "",
+  Address: "",
+  Address2: "",
+  City: "",
+  Prov: "",
+  PostalCode: "",
+  Title: "",
+  Notes: "",
+  DateofReg: "",
+  RenewalDate: "",
 
+  Board: false,
+  Participant: false,
+  Affiliate: false,
+  Volunteer: false,
+  VotingMbr: false,
+  VotingMbr_Life: false,
+  CSG: false,
+  Staff: false,
+  Status_Donor: false,
+};
+
+export default function Modal_Member_AddNew({
+  handle_addNewMember,
+}: {
+  handle_addNewMember: (member_AddNew_Data: any) => void;
+}) {
   const [showModal, setShowModal] = React.useState(false);
 
-  const [member_AddInfo, setMember_AddInfo]=React.useState(
-    {        
-      Company: "",
-      DoB: "",
-      Gender: "",
-      Lname:"",
-      Fname:"",
-      Family:"",
-      Title: "",
-      Address: "",
-      Address2: "",
-      City: "",
-      Prov: "",
-      PhoneHome: "",
-      Cell: "",
-      Email: "",
-      Email2: "",
-      RenewalDate: "",
-      Disability:"",
-      DateofReg: "",
-      VotingMbr: "",
-      VotingMbr_Life: "",
-      Participant: "",
-      Affiliate: "",
-      Volunteer: "",
-      Board: "",
-      Staff: "",
-      CSG:"",
-      Status_Donor: "",
-      Notes: "",
-    }
-  )
+  const [member_AddNew_Data, setMember_AddNew_Data] = React.useState(
+    initialState
+  );
 
-  function handle_Member_AddNew_Local(event) {
-    event.preventDefault();
-    console.log(event);
-    //handle_Member_AddNew(event);
+  function closeModal() {
+    setShowModal(false);
+    setMember_AddNew_Data({ ...initialState });
+  }
+
+  async function handle_addNewMember_Local() {
+    console.log("successful", member_AddNew_Data);
+
+    //setMember_AddNew_Data({ ...initialState });
+
+    await handle_addNewMember(member_AddNew_Data);
   }
 
   return (
@@ -63,11 +78,11 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
 
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none border-0">
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none border-0  ">
             <form
               className="space-y-6"
-              onSubmit={handle_Member_AddNew_Local}
-              method="POST"
+              // onSubmit={handle_addNewMember_Local}
+              // method="POST"
             >
               <div className="relative my-6 mx-auto w-[1300px] h-[800px] ">
                 {/*content*/}
@@ -78,7 +93,7 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
 
                     <button
                       className="w-[70px]  border-emerald-700 border-[0px] hover:bg-emerald-100 active:bg-emerald-600 font-bold uppercase text-sm px-2 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => closeModal()}
                     >
                       <span className="bg-transparent text-black opacity-50 h-6 w-6 text-l block outline-none focus:outline-none">
                         close
@@ -100,8 +115,14 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                             name="Login"
                             type="input"
                             autoComplete="Login"
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                            onChange={null}
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            value={member_AddNew_Data.Fname}
+                            onChange={(e) =>
+                              setMember_AddNew_Data((Fname: any) => ({
+                                ...member_AddNew_Data,
+                                Fname: e.target.value,
+                              }))
+                            }
                           />
                         </span>
                       </div>
@@ -112,9 +133,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Lname}
+                            onChange={(e) =>
+                              setMember_AddNew_Data((Lname: any) => ({
+                                ...member_AddNew_Data,
+                                Lname: e.target.value,
+                              }))
+                            }
                           />
                         </span>
                       </div>
@@ -125,9 +153,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
-                            type="text"
+                            type="date"
+                            value={member_AddNew_Data.DoB}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                DoB: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -138,9 +173,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Gender}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Gender: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -151,9 +193,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.PhoneHome}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                PhoneHome: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -164,9 +213,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Cell}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Cell: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -177,9 +233,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
-                            type="text"
+                            type="email"
+                            value={member_AddNew_Data.Email}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Email: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -190,9 +253,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
-                            type="text"
+                            type="email"
+                            value={member_AddNew_Data.Email2}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Email2: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -203,9 +273,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Company}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Company: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -216,9 +293,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Family}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Family: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -229,9 +313,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Disability}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Disability: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -244,9 +335,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Address}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Address: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -257,9 +355,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Address2}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Address2: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -270,9 +375,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.City}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                City: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -283,9 +395,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Prov}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Prov: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -296,9 +415,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.PostalCode}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                PostalCode: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -309,9 +435,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
                             type="text"
+                            value={member_AddNew_Data.Title}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Title: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -324,7 +457,13 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                           <textarea
                             required
                             id="Event_Details"
-                            onChange={null}
+                            value={member_AddNew_Data.Notes}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                Notes: e.target.value,
+                              })
+                            }
                             className="w-full h-[130px] rounded-md border border-[#ffffff] bg-white py-1 px-4 text-base font-medium text-[#6B7280] outline-none placeholder-gray-300  focus:border-[#6A64F1] "
                             placeholder="Write your thoughts ... ..."
                           ></textarea>
@@ -337,9 +476,16 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
-                            type="text"
+                            type="date"
+                            value={member_AddNew_Data.DateofReg}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                DateofReg: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
@@ -350,16 +496,26 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                         </span>
                         <span className="border-0 w-[250px] flex  justify-left text-left">
                           <input
-                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            className="appearance-none border-[1px] border-gray-200 rounded w-full py-2 px-4 text-sky-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                             id="inline-full-name"
-                            type="text"
+                            type="date"
+                            value={member_AddNew_Data.RenewalDate}
+                            onChange={(e) =>
+                              setMember_AddNew_Data({
+                                ...member_AddNew_Data,
+                                RenewalDate: e.target.value,
+                              })
+                            }
                           />
                         </span>
                       </div>
                     </div>
                     {/* =========  3rd column =================================== */}
                     <div className=" border-2 flex flex-col md:w-1/5">
-                      <StatusList />
+                      <StatusList
+                        member_AddNew_Data={member_AddNew_Data}
+                        setMember_AddNew_Data={setMember_AddNew_Data}
+                      />
                     </div>
                   </div>
 
@@ -368,13 +524,14 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
                     <button
                       className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={() => setShowModal(false)}
+                      onClick={(e) => closeModal()}
                     >
                       Close
                     </button>
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="submit"
+                      type="button"
+                      onClick={() => handle_addNewMember_Local()}
                     >
                       Save Changes
                     </button>
@@ -393,27 +550,38 @@ export default function Modal_Member_AddNew({ handle_Member_AddNew }: any) {
   );
 }
 
-const StatusList = () => {
+//==============================================================================
+
+const StatusList = ({ member_AddNew_Data, setMember_AddNew_Data }: any) => {
   return (
     <div className="flex flex-col p-3 space-y-1">
       <div className="flex flex-row hover:bg-white p-3 m-3 border-b-[1px] border-blue-400 text-blue-700">
         Member Status
       </div>
-      {dataStatus.map((status: any, key: number) => {
+      {data_Status.map((status: any, key: number) => {
         return (
-          <div key={key} className="flex flex-row hover:bg-white p-2">
+          <div
+            key={key}
+            className="flex flex-row hover:bg-white hover:border- p-2"
+          >
             <label
-              className=" border-0 w-[30px] ms-3.5 text-sm text-gray-600 dark:text-gray-500  h-full flex items-center justify-end text-left m-auto"
+              className=" border-0 w-[30px] ms-3.5 text-sm text-gray-600 dark  h-full flex items-center justify-end text-left m-auto"
               text-slate-500
             >
               <input
                 type="checkbox"
                 className="w-[25px] h-[25px] border-0 border-gray-50 rounded disabled:opacity-50 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 outline-none"
-                value="Board"
-                onChange={null}
+                value={status.fieldTitle}
+                checked={member_AddNew_Data[status.fieldTitle]}
+                onChange={(e) =>
+                  setMember_AddNew_Data({
+                    ...member_AddNew_Data,
+                    [status.fieldTitle]: e.target.checked,
+                  })
+                }
               />
             </label>
-            <label className=" border-0 ms-3.5 text-sm text-grark:text-gray-500 w-[200px] h-full flex items-center justify-start m-auto">
+            <label className=" border-0 ms-3.5 text-sm text-slate-500 text-grark w-[200px] h-full flex items-center justify-start m-auto">
               {status.fullTitle}
             </label>
           </div>

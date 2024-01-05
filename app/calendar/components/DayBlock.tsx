@@ -26,7 +26,7 @@ export default async function DayEvents({
     console.log(eventAddInfo);
     await prisma.tEvents.create({
       data: {
-        Date_Added: new Date(),
+        Date_Added: moment(new Date()).format("YYY-MM-DD"),
         Start_Date: eventAddInfo.Start_Date,
         End_Date: eventAddInfo.End_Date,
         Start_Time: eventAddInfo.Start_Time,

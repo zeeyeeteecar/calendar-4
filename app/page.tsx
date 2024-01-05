@@ -1,34 +1,26 @@
 import React from "react";
 import Link from "next/link";
-
-
-const mainMenuData = [
-  { title: "Sign In", link: "/signin", query: { name: "test" } },
-  { title: "Sign Out", link: "/signout", query: { name: "test" } },
-  { title: "Member", link: "/members", query: { name: "test" } },
-  { title: "Calendar", link: "/calendar", query: { name: "test" } },
-];
+import { data_MainMenu } from "./lib/data";
 
 export default function page() {
   return (
     <div className="w-screen h-screen flex flex-row  justify-center items-center border-2  ">
       <ul className="flex flex-col">
-        {mainMenuData &&
-          mainMenuData.map((menu: any, key: number) => {
-            return (
-              <Link
-                className="text-blue-500 hover:text-blue-800 font-bold text-4xl w-[400px] "
-                href={menu.link}
+        {data_MainMenu.map((menu: any, key: number) => {
+          return (
+            <Link
+              className="text-blue-500 hover:text-blue-800 font-bold text-4xl w-[400px] "
+              href={menu.link}
+            >
+              <div
+                key={key}
+                className="mr-6 w-[400px] h-[80px] text-center border-2 flex justify-center items-center hover:bg-slate-400 "
               >
-                <div
-                  key={key}
-                  className="mr-6 w-[400px] h-[80px] text-center border-2 flex justify-center items-center hover:bg-slate-400 "
-                >
-                  {menu.title}
-                </div>
-              </Link>
-            );
-          })}
+                {menu.title}
+              </div>
+            </Link>
+          );
+        })}
       </ul>
       <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
         <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">

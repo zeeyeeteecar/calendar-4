@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -12,6 +12,7 @@ export default function RegisterPage() {
 
   const loginUser = async (e: any) => {
     e.preventDefault();
+
 
     await signIn("credentials", {
       ...data,

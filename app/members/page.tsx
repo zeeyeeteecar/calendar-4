@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Members_Blcok_SearchList from "./components/Members_Blcok_SearchList";
 import Members_Block_SearchBar from "./components/Members_Block_SearchBar";
 import Member_AddNew from "./components/Member_AddNew";
+import LoadingSpinner from "../Common/components/LoadingSpinner";
 
 //let globe_Search_Members_Results: any;
 let globe_MemberSearchKeywords: {
@@ -12,7 +13,7 @@ let globe_MemberSearchKeywords: {
   Lname: string;
   Address: string;
   PhoneHome: string;
-} = { tMasterID: "", Fname: "Tom", Lname: "", Address: "", PhoneHome: "" };
+} = { tMasterID: "", Fname: "", Lname: "", Address: "86", PhoneHome: "" };
 
 export default function page() {
   async function handle_Search_Members_Debounce(searchKeywords: any) {
@@ -63,6 +64,7 @@ export default function page() {
 
   return (
     <>
+      
       <div className="flex flex-row p-3 space-x-3">
         <Member_AddNew />
         <Members_Block_SearchBar
