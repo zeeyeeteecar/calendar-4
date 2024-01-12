@@ -4,15 +4,18 @@ import { prisma } from "../lib/db";
 
 import Result_SearchClass from "./components/Result_SearchClass";
 import SearchMember from "./components/SearchMember";
+import Invoice_Preview from "./components/Invoice_Preview";
 
 let globe_MemberSearchResult = null;
 let globe_Selected_MemberInfo = null;
 let globe_SelectedMember_RegisterInfo = null;
+let globe_RegistrationInfo = { memberInfo: null, eventsInfo: null };
 
 //====================================================
 async function handle_SearchMember(data: FormData) {
   "use server";
   const Fname = data.get("Fname")?.valueOf().toString();
+  //const Fname = "tom";
   const Lname = data.get("Lname")?.valueOf().toString();
   const MemberID = data.get("MemberID")?.valueOf();
 
@@ -31,7 +34,7 @@ async function handle_SearchMember(data: FormData) {
   //redirect("/");
   globe_Selected_MemberInfo = null;
   revalidatePath("/");
-  console.log("globe_MemberSearchResult", globe_MemberSearchResult);
+  //console.log("globe_MemberSearchResult", globe_MemberSearchResult);
 }
 
 ///========================================================
@@ -56,25 +59,66 @@ async function handle_SearchMember(data: FormData) {
 async function handle_radioChanged(formData: FormData) {
   "use server";
   const memberID = formData.get("memberID");
-  console.log(memberID);
+
+  console.log("memberID", memberID);
   globe_SelectedMember_RegisterInfo = await prisma.tMemberRegEvent.findMany({
     where: {
       MemberID: Number(memberID),
+      tEvents:{Start_Date:{gte:"2024-01-01"}}
+
+    },
+    include: { tEvents: {}, tMaster: {} },
+
+    orderBy: { EventID: "desc" },
+    //take: 3,
+  });
+
+  // globe_RegistrationInfo = globe_SelectedMember_RegisterInfo.
+  //   ? globe_SelectedMember_RegisterInfo.tMaster
+  //   : null;
+
+  console.log(
+    "globe_SelectedMember_RegisterInfo",
+    globe_SelectedMember_RegisterInfo
+  );
+  revalidatePath("/");
+}
+
+///========================================================
+async function SelectedMember_RegisterInfo_test() {
+  "use server";
+  const result = await prisma.tMemberRegEvent.findMany({
+    where: {
+      MemberID: 613,
     },
     include: { tEvents: {} },
     orderBy: [{ EventID: "desc" }],
   });
-
-  revalidatePath("/");
-  console.log("globe_SelectedMember_RegisterInfo", globe_SelectedMember_RegisterInfo);
+  return await result;
 }
 
-///========================================================
+// ///========================================================
+async function _handle_RegistrationInvoicePreview(formData: FormData) {
+  "use server";
 
-export default function registration() {
+  const registrationStatus = formData.get("radio_RegistrationStatus");
+  const selectedEvents = formData.getAll("checkbox");
+
+  console.log(registrationStatus);
+  console.log(selectedEvents);
+  console.log(formData);
+
+  globe_RegistrationInfo.eventsInfo = formData;
+
+  revalidatePath("/");
+}
+
+///===================================================================================
+
+export default async function registration() {
   return (
-    <div className="w-screen h-screen border-0 flex flex-row p-3 font-light">
-      <div className="w-1/3 h-full border-2 m-0 ">
+    <div className="w-screen h-screen border flex flex-row p-1 font-light">
+      <div className=" w-3/12 h-full border-2 m-0 ">
         <SearchMember
           globe_MemberSearchResult={globe_MemberSearchResult}
           globe_Selected_MemberInfo={globe_Selected_MemberInfo}
@@ -82,13 +126,27 @@ export default function registration() {
           handle_radioChanged={handle_radioChanged}
         />
       </div>
-      <div className="w-1/3 border-2 m-1">
+
+      <div className="w-3/12 border p-1">
         <Result_SearchClass
-          globe_MemberSearchResult={globe_MemberSearchResult}
-          globe_SelectedMember_RegisterInfo={globe_SelectedMember_RegisterInfo}
+          // globe_MemberSearchResult={globe_MemberSearchResult}
+          globe_SelectedMember_RegisterInfo={
+            await globe_SelectedMember_RegisterInfo
+          }
+          globe_SelectedMember_RegisterInfo_test={
+            await SelectedMember_RegisterInfo_test()
+          }
+          _handle_RegistrationInvoicePreview={
+            _handle_RegistrationInvoicePreview
+          }
         />
       </div>
-      <div className="w-1/3 border-2 m-1"></div>
+
+      <div className="w-6/12 border-2 p-1 ">
+        <Invoice_Preview globe_RegistrationInfo={globe_RegistrationInfo} />
+        {/* <div>{JSON.stringify(await SelectedMember_RegisterInfo_test())}</div> */}
+        <div>{JSON.stringify(globe_SelectedMember_RegisterInfo)}</div>
+      </div>
     </div>
   );
 }

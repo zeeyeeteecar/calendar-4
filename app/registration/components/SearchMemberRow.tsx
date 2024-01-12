@@ -7,10 +7,48 @@ const randomAvatarLink = () => {
   return url + randomNumber.toString() + ".png";
 };
 
-export default function SearchMemberRow({ member }: any) {
+export default function SearchMemberRow({ member, handle_radioChanged }: any) {
   return (
-    <div className="relative space-2  border-0 w-full space-2 flex flex-col space-2 p-2 ">
-      <input
+    <div className="relative border-0 w-full h-[100px] space-0 flex flex-col p-0 ">
+      <form action={handle_radioChanged}>
+        <button
+          name="memberID"
+          type="submit"
+          value={member.tMasterID}
+          className=" w-full hover:bg-yellow-100 focus:outline-none focus:border-0 focus:bg-yellow-200 rounded-lg delay-100"
+        >
+          <div className="flex flex-row p-2 space-x-4 w-full border-0">
+            <div className="w-[70px]">
+              <img
+                src={randomAvatarLink()}
+                alt="user photo"
+                className="w-10 h-10 object-cover rounded-full"
+              />
+            </div>
+            <div className="flex flex-col w-full">
+              <div className="flex flex-row">
+                <span className="text-base text-left inline-block w-full">
+                  {member.Fname} {member.Lname}
+                </span>
+                {member.Participant ? (
+                  <span className="rounded-full bg-green-100 text-green-500 text-xs font-semibold inline-block w-[120px] text-center">
+                    Participant
+                  </span>
+                ) : null}
+              </div>
+              <div className="flex flex-row">
+                <span className="text-sm text-left opacity-20 inline-block w-[80px] border-0">
+                  {member.tMasterID}
+                </span>
+                <span className="text-sm text-left opacity-60 inline-block w-full border-0">
+                  {member.PhoneHome} {member.Address}
+                </span>
+              </div>
+            </div>
+          </div>
+        </button>
+      </form>
+      {/* <input
         type="radio"
         name="memberID"
         id={member.tMasterID}
@@ -47,7 +85,7 @@ export default function SearchMemberRow({ member }: any) {
         >
           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
         </svg>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -5,7 +5,6 @@ import { SlPeople } from "react-icons/sl";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiStar } from "react-icons/ci";
 
-
 export const data_Status = [
   { fullTitle: "Board", title: "Board", clr: "red", fieldTitle: "Board" },
   {
@@ -99,3 +98,11 @@ export const MyComponent = {
   CiCalendar: CiCalendar,
   SlPeople: SlPeople,
 };
+
+export const RegistrationStatus = [
+  { status: "none", statusFee: 0, defaultChecked:true },
+  { status: "New Registration", statusFee: 10 , defaultChecked:false },
+  { status: "Renewal ", statusFee: 5 , defaultChecked:false },
+  { status: "Voting Member", statusFee: 20 , defaultChecked:false },
+  { status: "Lifetime V-Member ", statusFee: 200 , defaultChecked:false},
+];

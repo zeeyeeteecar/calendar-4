@@ -171,8 +171,8 @@ model tMemberRegEvent {
   PayCategoryCode                String?  @db.VarChar(255)
   PaymentCategoryTitle           String?  @db.VarChar(255)
   
-  tEvents       tEvents     @relation(fields: [EventID], references: [Event_ID])
-  EventID                        Int
+  tEvents       tEvents ?    @relation(fields: [EventID], references: [Event_ID])
+  EventID                        Int?
 
   MemberOrVol                    String?  @db.VarChar(255)
   MemberPayment                  Float?
